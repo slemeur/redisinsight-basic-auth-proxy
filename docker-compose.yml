@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+    nginx:
+        image: nginx
+        container_name: nginx-proxy 
+        ports:
+            - 8001:80
+        networks:
+            - redisinsight-network
+        volumes:
+            - /Users/stevanlemeur/Desktop/redisinsight-basic-auth-proxy/nginx-conf/:/etc/nginx/
+        depends_on: 
+            - redisinsight-app
+
+    redisinsight-app:
+        image: redislabs/redisinsight:latest
+        container_name: redisinsight
+        networks:
+            - redisinsight-network
+
+#Docker Networks
+networks:
+    redisinsight-network:
+      driver: bridge
